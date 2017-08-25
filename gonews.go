@@ -4,9 +4,10 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/thoj/go-ircevent"
-	"os"
 	"log"
+	"os"
+
+	"github.com/thoj/go-ircevent"
 )
 
 const server = "irc.snoonet.org:6667"
@@ -57,6 +58,10 @@ func main() {
 			case "live", "ard":
 				{
 					irccon.Privmsg(channel, "Tra-la-la die News sind live: http://www.tagesschau.de/multimedia/livestreams/livestream3/index.html")
+				}
+			case "zib", "anews":
+				{
+					irccon.Privmsg(channel, "Tra-la-la die News sind da: http://tvthek.orf.at/profile/ZIB-1/1203")
 				}
 			case "join":
 				{
