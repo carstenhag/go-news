@@ -37,12 +37,15 @@ func main() {
 
 	irccon.AddCallback("PRIVMSG", func(e *irc.Event) {
 
+		// Only handle messages that start with the prefixCharacter
 		if e.Message()[:1] != prefixCharacter {
 			return
 		}
 
 		go func(e *irc.Event) {
 
+			// Returns the channel name when message is recieved in a channel, otherwise returns the bot's nick,
+			// which is why we have to manually set the destination in case of a query.
 			channel := e.Arguments[0]
 			if e.Arguments[0] == irccon.GetNick() {
 				channel = e.Nick
@@ -66,14 +69,13 @@ func main() {
 			case "join":
 				{
 					if e.Nick == admin && len(commands) >= 2 {
-						// verify if it's a valid channel name?
+						// todo: verify if it's a valid channel name?
 						irccon.Join(commands[1])
 					}
 				}
-			case "leave":
+			case "leave", "part":
 				{
-					if e.Nick == admin {
-						// don't try to part queries
+					if e.Nick == admin && channel != e.Nick {
 						irccon.Part(channel)
 					}
 				}
