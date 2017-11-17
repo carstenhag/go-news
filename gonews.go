@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/robfig/cron"
 	"github.com/thoj/go-ircevent"
 )
 
@@ -28,6 +29,12 @@ func main() {
 	irccon.VerboseCallbackHandler = true
 	irccon.Debug = true
 	irccon.UseTLS = false
+
+	c := cron.New()
+	c.AddFunc("0 00 20 * * *", func() {
+		irccon.Privmsg(joinChannel, "Tra-la-la die News sind live: http://www.tagesschau.de/multimedia/livestreams/livestream3/index.html")
+	})
+	c.Start()
 
 	irccon.AddCallback("001", func(e *irc.Event) {
 		irccon.Join(joinChannel)
