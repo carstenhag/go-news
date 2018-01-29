@@ -31,7 +31,7 @@ func main() {
 	irccon.UseTLS = false
 
 	c := cron.New()
-	c.AddFunc("0 00 20 * * *", func() {
+	c.AddFunc("0 58 19 * * *", func() {
 		irccon.Privmsg(joinChannel, "Tra-la-la die News sind live: http://www.tagesschau.de/multimedia/livestreams/livestream3/index.html")
 	})
 	c.Start()
